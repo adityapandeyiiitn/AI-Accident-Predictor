@@ -50,83 +50,142 @@ traffic_img_base64 = get_base64_image("traffic.jpg")
 st.markdown("""
     <style>
     /* Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
     
     html, body, [class*="css"] {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    
+    /* Global App Background Styling */
+    .stApp {
+        background-color: #0b0f19;
+        background-image: radial-gradient(at 0% 0%, rgba(17, 24, 39, 0.8) 0, transparent 50%), 
+                          radial-gradient(at 50% 0%, rgba(30, 58, 138, 0.25) 0, transparent 50%);
+    }
+    
+    /* Floating Top Navigation Bar (Streamlit Tab Overrides) */
+    div[data-baseweb="tab-list"] {
+        background: rgba(22, 30, 49, 0.7) !important;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 8px 16px !important;
+        border-radius: 40px !important;
+        gap: 10px !important;
+        justify-content: center !important;
+        margin: 10px auto 35px auto !important;
+        max-width: 920px !important;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4) !important;
+    }
+    
+    /* Remove default Streamlit tab borders */
+    div[data-baseweb="tab-list"]::after {
+        display: none !important;
+    }
+    div[class*="stTabs"] > div:first-child {
+        border-bottom: none !important;
+    }
+    
+    /* Style individual tab buttons */
+    button[data-baseweb="tab"] {
+        background-color: transparent !important;
+        color: #94A3B8 !important;
+        border: none !important;
+        padding: 10px 24px !important;
+        border-radius: 30px !important;
+        font-weight: 600 !important;
+        font-size: 0.92rem !important;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    /* Active navigation state */
+    button[aria-selected="true"] {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35) !important;
+    }
+    
+    /* Hover state on tab items */
+    button[data-baseweb="tab"]:hover {
+        color: #f1f5f9 !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
     }
     
     /* Main Dashboard Cards */
     .metric-card {
-        background: rgba(30, 41, 59, 0.45);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 24px;
-        box-shadow: 0 8px 30px 0 rgba(0, 0, 0, 0.2);
-        margin-bottom: 20px;
-        transition: transform 0.2s ease, border-color 0.2s ease;
+        background: rgba(17, 24, 39, 0.6) !important;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+        margin-bottom: 24px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .metric-card:hover {
-        border-color: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+        transform: translateY(-2px);
     }
     
     /* Hero Section Container */
     .hero-container {
         position: relative;
-        padding: 60px 40px;
-        border-radius: 12px;
+        padding: 70px 48px;
+        border-radius: 20px;
         border: 1px solid rgba(255, 255, 255, 0.08);
-        margin-bottom: 30px;
+        margin-bottom: 40px;
         overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
     }
     
     /* Risk Badges */
     .risk-badge {
-        padding: 6px 14px;
-        border-radius: 4px;
+        padding: 8px 16px;
+        border-radius: 6px;
         font-weight: 700;
-        font-size: 0.8rem;
-        letter-spacing: 1px;
+        font-size: 0.85rem;
+        letter-spacing: 1.2px;
         display: inline-block;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
     }
     .risk-low {
-        background-color: rgba(16, 185, 129, 0.1);
-        color: #10B981;
-        border: 1px solid rgba(16, 185, 129, 0.2);
+        background-color: rgba(16, 185, 129, 0.08);
+        color: #34D399;
+        border: 1px solid rgba(16, 185, 129, 0.25);
     }
     .risk-medium {
-        background-color: rgba(245, 158, 11, 0.1);
-        color: #F59E0B;
-        border: 1px solid rgba(245, 158, 11, 0.2);
+        background-color: rgba(245, 158, 11, 0.08);
+        color: #FBBF24;
+        border: 1px solid rgba(245, 158, 11, 0.25);
     }
     .risk-high {
-        background-color: rgba(239, 68, 68, 0.1);
-        color: #EF4444;
-        border: 1px solid rgba(239, 68, 68, 0.2);
-        box-shadow: 0 0 10px rgba(239, 68, 68, 0.15);
+        background-color: rgba(239, 68, 68, 0.08);
+        color: #F87171;
+        border: 1px solid rgba(239, 68, 68, 0.25);
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
     }
     
     /* Progress Bar Container */
     .progress-bg {
-        background-color: #1e293b;
-        border-radius: 4px;
+        background-color: #111827;
+        border-radius: 6px;
         width: 100%;
-        height: 10px;
+        height: 12px;
         overflow: hidden;
         border: 1px solid rgba(255, 255, 255, 0.05);
-        margin: 15px 0;
+        margin: 20px 0;
     }
     
     /* Bullet Points */
     .insight-bullet {
         margin-left: 5px;
-        padding-left: 12px;
+        padding-left: 15px;
         border-left: 3px solid #3B82F6;
-        margin-bottom: 12px;
-        font-size: 0.95rem;
-        color: #E2E8F0;
+        margin-bottom: 16px;
+        font-size: 0.98rem;
+        color: #CBD5E1;
+        line-height: 1.5;
     }
     
     /* Divider */
@@ -139,24 +198,25 @@ st.markdown("""
     
     /* Alert details box */
     .alert-details {
-        padding: 12px 16px;
-        border-radius: 6px;
-        font-size: 0.95rem;
-        margin-top: 15px;
-        line-height: 1.5;
+        padding: 16px 20px;
+        border-radius: 8px;
+        font-size: 1rem;
+        margin-top: 20px;
+        line-height: 1.6;
+        font-weight: 500;
     }
     .alert-low {
-        background-color: rgba(16, 185, 129, 0.05);
+        background-color: rgba(16, 185, 129, 0.04);
         border-left: 4px solid #10B981;
         color: #E2E8F0;
     }
     .alert-medium {
-        background-color: rgba(245, 158, 11, 0.05);
+        background-color: rgba(245, 158, 11, 0.04);
         border-left: 4px solid #F59E0B;
         color: #E2E8F0;
     }
     .alert-high {
-        background-color: rgba(239, 68, 68, 0.05);
+        background-color: rgba(239, 68, 68, 0.04);
         border-left: 4px solid #EF4444;
         color: #E2E8F0;
     }
@@ -171,8 +231,8 @@ if traffic_img_base64:
         background-size: cover;
         background-position: center;
     ">
-        <h1 style="color: #ffffff; font-size: 2.5rem; font-weight: 800; margin: 0 0 8px 0; letter-spacing: -0.5px;">Accident Risk Zone Predictor</h1>
-        <p style="color: #94A3B8; font-size: 1.1rem; font-weight: 400; margin: 0; max-width: 800px;">Predictive Road Safety Analytics and Decision Support System using Machine Learning. Adjust situational factors to estimate hazard rates.</p>
+        <h1 style="color: #ffffff; font-size: 2.6rem; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', sans-serif;">Accident Risk Zone Predictor</h1>
+        <p style="color: #94A3B8; font-size: 1.15rem; font-weight: 400; margin: 0; max-width: 800px; font-family: 'Plus Jakarta Sans', sans-serif;">Predictive Road Safety Analytics and Decision Support System using Machine Learning. Adjust situational factors to estimate hazard rates.</p>
     </div>
     """
 else:
@@ -180,8 +240,8 @@ else:
     <div class="hero-container" style="
         background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
     ">
-        <h1 style="color: #ffffff; font-size: 2.5rem; font-weight: 800; margin: 0 0 8px 0; letter-spacing: -0.5px;">Accident Risk Zone Predictor</h1>
-        <p style="color: #94A3B8; font-size: 1.1rem; font-weight: 400; margin: 0; max-width: 800px;">Predictive Road Safety Analytics and Decision Support System using Machine Learning. Adjust situational factors to estimate hazard rates.</p>
+        <h1 style="color: #ffffff; font-size: 2.6rem; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', sans-serif;">Accident Risk Zone Predictor</h1>
+        <p style="color: #94A3B8; font-size: 1.15rem; font-weight: 400; margin: 0; max-width: 800px; font-family: 'Plus Jakarta Sans', sans-serif;">Predictive Road Safety Analytics and Decision Support System using Machine Learning. Adjust situational factors to estimate hazard rates.</p>
     </div>
     """
 
@@ -210,7 +270,7 @@ with st.sidebar:
     st.markdown(f"**Adverse Weather Penalty**\n{worst_weather.capitalize()} conditions multiply baseline risk by up to 2.5x.")
     st.markdown("**Highway Rule**\nHigh-speed highway travel compounded by low visibility triggers critical safety warnings.")
 
-# Tab setup - Emojis removed
+# Tab setup - Emojis removed, Navbar styled on top via CSS rules
 tab_predict, tab_simulator, tab_analytics, tab_model = st.tabs([
     "Live Risk Predictor", 
     "Scenario Simulator", 
@@ -220,6 +280,7 @@ tab_predict, tab_simulator, tab_analytics, tab_model = st.tabs([
 
 # ----------------- TAB 1: LIVE RISK PREDICTOR -----------------
 with tab_predict:
+    st.markdown("<div class='tab-content'>", unsafe_allow_html=True)
     st.markdown("### Real-Time Risk Simulation")
     st.write("Modify the environmental features below to evaluate the immediate road risk score.")
     
@@ -291,7 +352,7 @@ with tab_predict:
             st.markdown(f"""
                 <div class='progress-bg'>
                     <div style='background-color: {bar_color}; width: {risk_score}%; height: 100%; 
-                                transition: width 0.5s ease-in-out;'></div>
+                                box-shadow: 0 0 10px {bar_color}; transition: width 0.5s ease-in-out;'></div>
                 </div>
             """, unsafe_allow_html=True)
             
@@ -320,9 +381,11 @@ with tab_predict:
             st.error("Model not loaded. Risk prediction unavailable.")
             
         st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ----------------- TAB 2: SCENARIO SIMULATOR -----------------
 with tab_simulator:
+    st.markdown("<div class='tab-content'>", unsafe_allow_html=True)
     st.markdown("### Side-by-Side Environmental Comparison")
     st.write("Compare the accident risk difference between two distinct situational scenarios.")
     
@@ -371,13 +434,14 @@ with tab_simulator:
             else:
                 st.write("Both scenarios have identical predicted risk coefficients.")
             st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ----------------- TAB 3: ANALYTICS & EDA DASHBOARD -----------------
 with tab_analytics:
+    st.markdown("<div class='tab-content'>", unsafe_allow_html=True)
     st.markdown("### Exploratory Data Analysis and Simulator Trends")
     st.write("Explore historical accident risk trends and correlations discovered during synthetic dataset analysis.")
     
-    # Emojis removed from sub-tabs
     tab_dist, tab_hour, tab_env, tab_heat = st.tabs([
         "Risk Distribution", 
         "Hour-by-Hour Risks", 
@@ -419,9 +483,11 @@ with tab_analytics:
         with col_i2:
             if os.path.exists("correlation_heatmap.png"):
                 st.image("correlation_heatmap.png", caption="Linear Correlation Heatmap of Features", use_container_width=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ----------------- TAB 4: MODEL ARCHITECTURE & METRICS -----------------
 with tab_model:
+    st.markdown("<div class='tab-content'>", unsafe_allow_html=True)
     st.markdown("### Machine Learning Pipeline and Metrics")
     st.write("Review the model selection, pipeline components, features, and predictive metrics.")
     
@@ -474,3 +540,4 @@ class CustomPipeline:
         return self.regressor.predict(X_trans)
     """)
     st.write("This pipeline uses CustomPreprocessor which fits category indexes to maintain column alignment consistency between training data and active user session inputs, and SimpleRandomForestRegressor implemented in pure NumPy.")
+    st.markdown("</div>", unsafe_allow_html=True)
