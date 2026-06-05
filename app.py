@@ -256,12 +256,12 @@ st.markdown("""
 if traffic_img_base64:
     hero_html = f"""
     <div class="hero-container" style="
-        background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), url(data:image/jpeg;base64,{traffic_img_base64});
+        background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.65)), url(data:image/jpeg;base64,{traffic_img_base64});
         background-size: cover;
         background-position: center;
     ">
         <h1 style="color: #ffffff; font-size: 2.6rem; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.5px;">Accident Risk Zone Predictor</h1>
-        <p style="color: #94A3B8; font-size: 1.15rem; font-weight: 400; margin: 0; max-width: 800px;">Predictive Road Safety Analytics and Decision Support System using Machine Learning. Adjust situational factors to estimate hazard rates.</p>
+        <p style="color: #ffffff; font-size: 1.15rem; font-weight: 500; margin: 0; max-width: 800px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Predictive Road Safety Analytics and Decision Support System using Machine Learning. Adjust situational factors to estimate hazard rates.</p>
     </div>
     """
 else:
