@@ -60,7 +60,7 @@ st.markdown("""
     .stApp {
         background-color: #0b0f19;
         background-image: radial-gradient(at 0% 0%, rgba(17, 24, 39, 0.8) 0, transparent 50%), 
-                          radial-gradient(at 50% 0%, rgba(30, 58, 138, 0.25) 0, transparent 50%);
+                          radial-gradient(at 50% 0%, rgba(30, 58, 138, 0.2) 0, transparent 50%);
     }
     
     /* Floating Top Navigation Bar (Streamlit Tab Overrides) */
@@ -110,21 +110,50 @@ st.markdown("""
         background-color: rgba(255, 255, 255, 0.05) !important;
     }
     
-    /* Main Dashboard Cards */
-    .metric-card {
-        background: rgba(17, 24, 39, 0.6) !important;
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 16px;
-        padding: 28px;
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
-        margin-bottom: 24px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Target Streamlit's native Bordered Containers (st.container(border=True)) */
+    div[data-testid="stVerticalBlockBorder"] {
+        background: rgba(17, 24, 39, 0.55) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        border-radius: 16px !important;
+        padding: 28px !important;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25) !important;
+        margin-bottom: 24px !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
-    .metric-card:hover {
-        border-color: rgba(255, 255, 255, 0.12);
-        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
-        transform: translateY(-2px);
+    div[data-testid="stVerticalBlockBorder"]:hover {
+        border-color: rgba(255, 255, 255, 0.12) !important;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35) !important;
+        transform: translateY(-2px) !important;
+    }
+    
+    /* Sidebar Styling Override for High-Visual Appeal */
+    section[data-testid="stSidebar"] {
+        background-color: #0c1220 !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15) !important;
+    }
+    section[data-testid="stSidebar"] div.stMarkdown h3 {
+        color: #ffffff !important;
+        font-size: 1.25rem !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.3px !important;
+        margin-top: 15px !important;
+        margin-bottom: 12px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        padding-bottom: 8px;
+    }
+    section[data-testid="stSidebar"] div.stMarkdown p, 
+    section[data-testid="stSidebar"] div.stMarkdown li {
+        color: #94A3B8 !important;
+        font-size: 0.92rem !important;
+        line-height: 1.55 !important;
+    }
+    section[data-testid="stSidebar"] hr {
+        background-color: rgba(255, 255, 255, 0.06) !important;
+        height: 1px !important;
+        border: none !important;
+        margin: 20px 0 !important;
     }
     
     /* Hero Section Container */
@@ -231,8 +260,8 @@ if traffic_img_base64:
         background-size: cover;
         background-position: center;
     ">
-        <h1 style="color: #ffffff; font-size: 2.6rem; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', sans-serif;">Accident Risk Zone Predictor</h1>
-        <p style="color: #94A3B8; font-size: 1.15rem; font-weight: 400; margin: 0; max-width: 800px; font-family: 'Plus Jakarta Sans', sans-serif;">Predictive Road Safety Analytics and Decision Support System using Machine Learning. Adjust situational factors to estimate hazard rates.</p>
+        <h1 style="color: #ffffff; font-size: 2.6rem; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.5px;">Accident Risk Zone Predictor</h1>
+        <p style="color: #94A3B8; font-size: 1.15rem; font-weight: 400; margin: 0; max-width: 800px;">Predictive Road Safety Analytics and Decision Support System using Machine Learning. Adjust situational factors to estimate hazard rates.</p>
     </div>
     """
 else:
@@ -240,8 +269,8 @@ else:
     <div class="hero-container" style="
         background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
     ">
-        <h1 style="color: #ffffff; font-size: 2.6rem; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', sans-serif;">Accident Risk Zone Predictor</h1>
-        <p style="color: #94A3B8; font-size: 1.15rem; font-weight: 400; margin: 0; max-width: 800px; font-family: 'Plus Jakarta Sans', sans-serif;">Predictive Road Safety Analytics and Decision Support System using Machine Learning. Adjust situational factors to estimate hazard rates.</p>
+        <h1 style="color: #ffffff; font-size: 2.6rem; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -0.5px;">Accident Risk Zone Predictor</h1>
+        <p style="color: #94A3B8; font-size: 1.15rem; font-weight: 400; margin: 0; max-width: 800px;">Predictive Road Safety Analytics and Decision Support System using Machine Learning. Adjust situational factors to estimate hazard rates.</p>
     </div>
     """
 
@@ -280,134 +309,125 @@ tab_predict, tab_simulator, tab_analytics, tab_model = st.tabs([
 
 # ----------------- TAB 1: LIVE RISK PREDICTOR -----------------
 with tab_predict:
-    st.markdown("<div class='tab-content'>", unsafe_allow_html=True)
     st.markdown("### Real-Time Risk Simulation")
     st.write("Modify the environmental features below to evaluate the immediate road risk score.")
     
     col_input, col_output = st.columns([1, 1], gap="large")
     
     with col_input:
-        st.markdown("<div class='metric-card'>", unsafe_allow_html=True)
-        st.write("#### Environmental Variables")
-        
-        hour = st.slider("Hour of Day (24h clock)", min_value=0, max_value=23, value=14, step=1,
-                         help="Hour of the day from midnight (0) to 11 PM (23).")
-        
-        weather = st.selectbox("Weather Condition", options=['clear', 'rain', 'fog'], index=0,
-                               format_func=lambda x: x.capitalize())
-        
-        traffic = st.selectbox("Traffic Density", options=['low', 'medium', 'high'], index=1,
-                               format_func=lambda x: x.capitalize())
-        
-        area_type = st.selectbox("Area Type / Road Classification", options=['urban', 'highway', 'rural'], index=0,
-                                 format_func=lambda x: x.capitalize())
-        
-        st.markdown("</div>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown("### Environmental Variables")
+            
+            hour = st.slider("Hour of Day (24h clock)", min_value=0, max_value=23, value=14, step=1,
+                             help="Hour of the day from midnight (0) to 11 PM (23).")
+            
+            weather = st.selectbox("Weather Condition", options=['clear', 'rain', 'fog'], index=0,
+                                   format_func=lambda x: x.capitalize())
+            
+            traffic = st.selectbox("Traffic Density", options=['low', 'medium', 'high'], index=1,
+                                   format_func=lambda x: x.capitalize())
+            
+            area_type = st.selectbox("Area Type / Road Classification", options=['urban', 'highway', 'rural'], index=0,
+                                     format_func=lambda x: x.capitalize())
         
     with col_output:
-        st.markdown("<div class='metric-card' style='height: 100%;'>", unsafe_allow_html=True)
-        st.write("#### Prediction Summary")
-        
-        if model is not None:
-            input_df = pd.DataFrame({
-                'hour': [hour],
-                'weather': [weather],
-                'traffic': [traffic],
-                'area_type': [area_type]
-            })
+        with st.container(border=True):
+            st.markdown("### Prediction Summary")
             
-            # Predict
-            risk_score = model.predict(input_df)[0]
-            risk_score = float(np.clip(risk_score, 0, 100))
-            
-            # Categorize
-            if risk_score <= 40:
-                category = "LOW"
-                badge_class = "risk-low"
-                badge_desc = "Safe driving conditions. Normal precaution required."
-                bar_color = "#10B981"
-                alert_class = "alert-low"
-                alert_text = "**Safe Conditions:** Road parameters represent baseline safety. Standard speed limits and road rules apply."
-            elif risk_score <= 70:
-                category = "MEDIUM"
-                badge_class = "risk-medium"
-                badge_desc = "Elevated risk. Driver alertness must be increased."
-                bar_color = "#F59E0B"
-                alert_class = "alert-medium"
-                alert_text = "**Caution Advised:** Environmental factors indicate elevated risk. Maintain safe distance and reduce speed."
-            else:
-                category = "HIGH"
-                badge_class = "risk-high"
-                badge_desc = "Dangerous environment. Exercise high vigilance and reduce speeds."
-                bar_color = "#EF4444"
-                alert_class = "alert-high"
-                alert_text = "**Critical Risk Warning:** Extreme risk detected. Avoid unessential travel or implement double distance rules and safety lights."
-
-            # Display risk score
-            st.markdown(f"<h3>Risk Coefficient: <span style='color:{bar_color}; font-size:3rem;'>{risk_score:.1f}%</span></h3>", unsafe_allow_html=True)
-            st.markdown(f"<span class='risk-badge {badge_class}'>{category} RISK ZONE</span>", unsafe_allow_html=True)
-            st.write(f"*{badge_desc}*")
-            
-            # Progress bar
-            st.markdown(f"""
-                <div class='progress-bg'>
-                    <div style='background-color: {bar_color}; width: {risk_score}%; height: 100%; 
-                                box-shadow: 0 0 10px {bar_color}; transition: width 0.5s ease-in-out;'></div>
-                </div>
-            """, unsafe_allow_html=True)
-            
-            # Custom styled alert box
-            st.markdown(f"<div class='alert-details {alert_class}'>{alert_text}</div>", unsafe_allow_html=True)
-            st.write("---")
-            
-            st.markdown("##### Contextual Safety Insights:")
-            
-            # Rules-based messages (emojis removed)
-            insights = []
-            if weather == 'fog' and area_type == 'highway':
-                insights.append("**Fog-Highway Compound Danger:** Speed differentials on highways in dense fog create immediate pile-up hazards. Reduce speed immediately.")
-            if 18 <= hour <= 23 or 0 <= hour <= 4:
-                insights.append("**Night-time Visual Fatigue:** Fatigue and headlight glare increases reaction time. Night hours represent a higher baseline risk multiplier.")
-            if weather == 'rain':
-                insights.append("**Hydroplaning Hazard:** Rain reduces tire grip. Increase braking distance by at least 2x.")
-            if traffic == 'high' and weather == 'rain':
-                insights.append("**Congestion Slip Hazard:** Slippery roads combined with dense traffic yields high rear-end collision statistics.")
-            if len(insights) == 0:
-                insights.append("**Optimal Environment:** Clear weather and daytime visibility yield maximum driving safety parameters.")
+            if model is not None:
+                input_df = pd.DataFrame({
+                    'hour': [hour],
+                    'weather': [weather],
+                    'traffic': [traffic],
+                    'area_type': [area_type]
+                })
                 
-            for insight in insights:
-                st.markdown(f"<div class='insight-bullet'>{insight}</div>", unsafe_allow_html=True)
-        else:
-            st.error("Model not loaded. Risk prediction unavailable.")
-            
-        st.markdown("</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+                # Predict
+                risk_score = model.predict(input_df)[0]
+                risk_score = float(np.clip(risk_score, 0, 100))
+                
+                # Categorize
+                if risk_score <= 40:
+                    category = "LOW"
+                    badge_class = "risk-low"
+                    badge_desc = "Safe driving conditions. Normal precaution required."
+                    bar_color = "#10B981"
+                    alert_class = "alert-low"
+                    alert_text = "**Safe Conditions:** Road parameters represent baseline safety. Standard speed limits and road rules apply."
+                elif risk_score <= 70:
+                    category = "MEDIUM"
+                    badge_class = "risk-medium"
+                    badge_desc = "Elevated risk. Driver alertness must be increased."
+                    bar_color = "#F59E0B"
+                    alert_class = "alert-medium"
+                    alert_text = "**Caution Advised:** Environmental factors indicate elevated risk. Maintain safe distance and reduce speed."
+                else:
+                    category = "HIGH"
+                    badge_class = "risk-high"
+                    badge_desc = "Dangerous environment. Exercise high vigilance and reduce speeds."
+                    bar_color = "#EF4444"
+                    alert_class = "alert-high"
+                    alert_text = "**Critical Risk Warning:** Extreme risk detected. Avoid unessential travel or implement double distance rules and safety lights."
+
+                # Display risk score
+                st.markdown(f"<h3>Risk Coefficient: <span style='color:{bar_color}; font-size:3rem;'>{risk_score:.1f}%</span></h3>", unsafe_allow_html=True)
+                st.markdown(f"<span class='risk-badge {badge_class}'>{category} RISK ZONE</span>", unsafe_allow_html=True)
+                st.write(f"*{badge_desc}*")
+                
+                # Progress bar
+                st.markdown(f"""
+                    <div class='progress-bg'>
+                        <div style='background-color: {bar_color}; width: {risk_score}%; height: 100%; 
+                                    box-shadow: 0 0 10px {bar_color}; transition: width 0.5s ease-in-out;'></div>
+                    </div>
+                """, unsafe_allow_html=True)
+                
+                # Custom styled alert box
+                st.markdown(f"<div class='alert-details {alert_class}'>{alert_text}</div>", unsafe_allow_html=True)
+                st.write("---")
+                
+                st.markdown("##### Contextual Safety Insights:")
+                
+                # Rules-based messages (emojis removed)
+                insights = []
+                if weather == 'fog' and area_type == 'highway':
+                    insights.append("**Fog-Highway Compound Danger:** Speed differentials on highways in dense fog create immediate pile-up hazards. Reduce speed immediately.")
+                if 18 <= hour <= 23 or 0 <= hour <= 4:
+                    insights.append("**Night-time Visual Fatigue:** Fatigue and headlight glare increases reaction time. Night hours represent a higher baseline risk multiplier.")
+                if weather == 'rain':
+                    insights.append("**Hydroplaning Hazard:** Rain reduces tire grip. Increase braking distance by at least 2x.")
+                if traffic == 'high' and weather == 'rain':
+                    insights.append("**Congestion Slip Hazard:** Slippery roads combined with dense traffic yields high rear-end collision statistics.")
+                if len(insights) == 0:
+                    insights.append("**Optimal Environment:** Clear weather and daytime visibility yield maximum driving safety parameters.")
+                    
+                for insight in insights:
+                    st.markdown(f"<div class='insight-bullet'>{insight}</div>", unsafe_allow_html=True)
+            else:
+                st.error("Model not loaded. Risk prediction unavailable.")
 
 # ----------------- TAB 2: SCENARIO SIMULATOR -----------------
 with tab_simulator:
-    st.markdown("<div class='tab-content'>", unsafe_allow_html=True)
     st.markdown("### Side-by-Side Environmental Comparison")
     st.write("Compare the accident risk difference between two distinct situational scenarios.")
     
     col_sc1, col_sc2 = st.columns(2)
     
     with col_sc1:
-        st.markdown("<div class='metric-card' style='border-left: 4px solid #3B82F6;'>", unsafe_allow_html=True)
-        st.subheader("Scenario A")
-        s1_hour = st.slider("Hour (A)", min_value=0, max_value=23, value=12, key="s1_h")
-        s1_weather = st.selectbox("Weather (A)", options=['clear', 'rain', 'fog'], index=0, key="s1_w")
-        s1_traffic = st.selectbox("Traffic (A)", options=['low', 'medium', 'high'], index=0, key="s1_t")
-        s1_area = st.selectbox("Area Type (A)", options=['urban', 'highway', 'rural'], index=1, key="s1_a")
-        st.markdown("</div>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown("### Scenario A")
+            s1_hour = st.slider("Hour (A)", min_value=0, max_value=23, value=12, key="s1_h")
+            s1_weather = st.selectbox("Weather (A)", options=['clear', 'rain', 'fog'], index=0, key="s1_w")
+            s1_traffic = st.selectbox("Traffic (A)", options=['low', 'medium', 'high'], index=0, key="s1_t")
+            s1_area = st.selectbox("Area Type (A)", options=['urban', 'highway', 'rural'], index=1, key="s1_a")
         
     with col_sc2:
-        st.markdown("<div class='metric-card' style='border-left: 4px solid #EC4899;'>", unsafe_allow_html=True)
-        st.subheader("Scenario B")
-        s2_hour = st.slider("Hour (B)", min_value=0, max_value=23, value=22, key="s2_h")
-        s2_weather = st.selectbox("Weather (B)", options=['clear', 'rain', 'fog'], index=2, key="s2_w")
-        s2_traffic = st.selectbox("Traffic (B)", options=['low', 'medium', 'high'], index=2, key="s2_t")
-        s2_area = st.selectbox("Area Type (B)", options=['urban', 'highway', 'rural'], index=1, key="s2_a")
-        st.markdown("</div>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown("### Scenario B")
+            s2_hour = st.slider("Hour (B)", min_value=0, max_value=23, value=22, key="s2_h")
+            s2_weather = st.selectbox("Weather (B)", options=['clear', 'rain', 'fog'], index=2, key="s2_w")
+            s2_traffic = st.selectbox("Traffic (B)", options=['low', 'medium', 'high'], index=2, key="s2_t")
+            s2_area = st.selectbox("Area Type (B)", options=['urban', 'highway', 'rural'], index=1, key="s2_a")
         
     # Calculate predictions
     if model is not None:
@@ -426,19 +446,17 @@ with tab_simulator:
         with col_res2:
             st.metric(label="Scenario B Risk", value=f"{risk_b:.1f}%", delta=f"{diff:+.1f}%", delta_color="inverse")
         with col_res3:
-            st.markdown("<div class='metric-card' style='padding: 15px;'>", unsafe_allow_html=True)
-            if diff > 0:
-                st.write(f"Scenario B has a **{abs(diff):.1f}% higher** predicted risk than Scenario A.")
-            elif diff < 0:
-                st.write(f"Scenario A has a **{abs(diff):.1f}% higher** predicted risk than Scenario B.")
-            else:
-                st.write("Both scenarios have identical predicted risk coefficients.")
-            st.markdown("</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+            with st.container(border=True):
+                st.markdown("### Comparison Analysis")
+                if diff > 0:
+                    st.write(f"Scenario B has a **{abs(diff):.1f}% higher** predicted risk than Scenario A.")
+                elif diff < 0:
+                    st.write(f"Scenario A has a **{abs(diff):.1f}% higher** predicted risk than Scenario B.")
+                else:
+                    st.write("Both scenarios have identical predicted risk coefficients.")
 
 # ----------------- TAB 3: ANALYTICS & EDA DASHBOARD -----------------
 with tab_analytics:
-    st.markdown("<div class='tab-content'>", unsafe_allow_html=True)
     st.markdown("### Exploratory Data Analysis and Simulator Trends")
     st.write("Explore historical accident risk trends and correlations discovered during synthetic dataset analysis.")
     
@@ -483,43 +501,39 @@ with tab_analytics:
         with col_i2:
             if os.path.exists("correlation_heatmap.png"):
                 st.image("correlation_heatmap.png", caption="Linear Correlation Heatmap of Features", use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
 
 # ----------------- TAB 4: MODEL ARCHITECTURE & METRICS -----------------
 with tab_model:
-    st.markdown("<div class='tab-content'>", unsafe_allow_html=True)
     st.markdown("### Machine Learning Pipeline and Metrics")
     st.write("Review the model selection, pipeline components, features, and predictive metrics.")
     
     col_met1, col_met2 = st.columns([1, 1.2])
     
     with col_met1:
-        st.markdown("<div class='metric-card'>", unsafe_allow_html=True)
-        st.write("#### Validation Performance")
-        st.write("Comparison of the trained models on the test set:")
-        
-        st.markdown("""
-        | Model Name | Root Mean Squared Error (RMSE) | R² Score (Variance Explained) |
-        | :--- | :---: | :---: |
-        | **Random Forest Regressor** | **9.01** | **79.8%** |
-        | Linear Regression | 11.67 | 66.1% |
-        """)
-        
-        st.write("##### Why Random Forest performed best:")
-        st.markdown(
-            "1. **Non-linear interactions:** Our dataset contains compound variables (e.g. Highway + Fog = super high risk). "
-            "Linear regression struggles to model these without explicit interaction terms, whereas Random Forest trees naturally capture them.\n"
-            "2. **Outlier robustness:** Decision trees are robust to outlier noise, yielding a lower RMSE."
-        )
-        st.markdown("</div>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown("### Validation Performance")
+            st.write("Comparison of the trained models on the test set:")
+            
+            st.markdown("""
+            | Model Name | Root Mean Squared Error (RMSE) | R² Score (Variance Explained) |
+            | :--- | :---: | :---: |
+            | **Random Forest Regressor** | **9.01** | **79.8%** |
+            | Linear Regression | 11.67 | 66.1% |
+            """)
+            
+            st.write("##### Why Random Forest performed best:")
+            st.markdown(
+                "1. **Non-linear interactions:** Our dataset contains compound variables (e.g. Highway + Fog = super high risk). "
+                "Linear regression struggles to model these without explicit interaction terms, whereas Random Forest trees naturally capture them.\n"
+                "2. **Outlier robustness:** Decision trees are robust to outlier noise, yielding a lower RMSE."
+            )
         
     with col_met2:
-        st.markdown("<div class='metric-card'>", unsafe_allow_html=True)
-        st.write("#### Feature Importances")
-        st.write("Feature importance computed by the Random Forest model:")
-        if os.path.exists("feature_importance.png"):
-            st.image("feature_importance.png", caption="Variance-reduction Feature Importances", use_container_width=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown("### Feature Importances")
+            st.write("Feature importance computed by the Random Forest model:")
+            if os.path.exists("feature_importance.png"):
+                st.image("feature_importance.png", caption="Variance-reduction Feature Importances", use_container_width=True)
         
     st.markdown("---")
     st.write("#### Architecture Design")
@@ -540,4 +554,3 @@ class CustomPipeline:
         return self.regressor.predict(X_trans)
     """)
     st.write("This pipeline uses CustomPreprocessor which fits category indexes to maintain column alignment consistency between training data and active user session inputs, and SimpleRandomForestRegressor implemented in pure NumPy.")
-    st.markdown("</div>", unsafe_allow_html=True)
