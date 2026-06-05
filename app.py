@@ -252,11 +252,11 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Hero Section with low opacity background image
+# Hero Section with slightly higher opacity background image
 if traffic_img_base64:
     hero_html = f"""
     <div class="hero-container" style="
-        background: linear-gradient(rgba(15, 23, 42, 0.86), rgba(15, 23, 42, 0.86)), url(data:image/jpeg;base64,{traffic_img_base64});
+        background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), url(data:image/jpeg;base64,{traffic_img_base64});
         background-size: cover;
         background-position: center;
     ">
